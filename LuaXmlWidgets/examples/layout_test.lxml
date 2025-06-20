@@ -1,0 +1,15 @@
+<App>
+    <Script>
+        function onButtonClick(event)
+            print("Button clicked!")
+        end
+    </Script>
+
+    <Window id="layoutWindow" visible=true text="Layout Test" width=400 height=300 layoutContainer="gap 10, fill">
+        <Button text="Button 1" layout="width 100" onClick="onButtonClick"/>
+        <Button text="Button 2" layout="width 150" onClick="onButtonClick"/>
+        <Button text="Button 3" layout="grow" onClick="onButtonClick"/>
+        <Label text="This is a label" layout="span 2"/>
+        <Button text="Span Button" layout="wrap, width 200" onClick="onButtonClick"/>
+    </Window>
+</App>

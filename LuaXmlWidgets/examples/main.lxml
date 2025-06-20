@@ -1,0 +1,54 @@
+<App>
+    <Script>
+        function onHotkey(event)
+            print("On Hotkey called")
+            print(document:getElementById("tree1"):getAttribute("outerLXML"))
+            print("User clicked on:", MessageBox("On hotkey message", "Hotkey caption", {"DO"}, "warning"))
+        end
+
+        function onRemoveTreeItem(event)
+            print("onRemoveTreeItem")
+            document:getElementById("item_dn"):remove()
+        end
+
+        function onAddTreeItem(event)
+            print("onAddTreeItem")
+            document:getElementById("item_dn"):setAttribute("bold", false)
+        end
+
+        function onChange(event)
+            local sel=document:getElementById("dropDown1"):getAttribute("selectedValue")
+            print("Selected=", sel)
+        end
+
+        function onLink(event)
+            print("On link")
+            document:getElementById("link"):setAttribute("onLink", nil)
+        end
+        
+        function onReplaceInnerText(event)
+            print("Replace inner text")
+            newLxml=[[
+                <Button    x=0 y=50 text="Test 1" onClick="onRemoveTreeItem"/>
+                <Button    x=100 y=50 text="Test 2" onClick="onAddTreeItem"/>
+            ]];
+            document:getElementById("window1"):setAttribute("innerLXML", newLxml)
+        end
+    </Script>
+
+    <Window id="window1" visible=true text="Example" layoutContainer="">
+        <GlobalHotkey id="hk1" hotkey="Ctrl+6" onHotkey="onHotkey"/>
+        <Label     layout="wrap"  id="label1" fgcolor="red"
+                   x=0 y=0 width=200 height=25 text="Hello world"
+                   autoresize=false ellipsis="left" border="sunken" tooltip="Tooltip example"/>
+        <Button    layout="wrap" id="button1" x=0 y=40 text="Remove Tree item" onClick="onRemoveTreeItem"/>
+        <Button    layout="wrap" x=80 y=40 text="Add Tree item" onClick="onAddTreeItem"/>
+        <Button    layout="wrap" x=200 y=40 text="Replace inner" onClick="onReplaceInnerText"/>
+        <Tree layout="wrap" id="tree1" x=1 y=70 width=300 height=300 rowLines=false multipleSelection=true>
+            <TreeNode id="item_dn" text="Dnipro" bold=true>
+                <TreeNode id="school_45" text="School 45" fgcolor="red" bgcolor="green"/>
+            </TreeNode>
+            <TreeNode id="item_kv" text="Kiev"/>
+        </Tree>
+    </Window>
+</App>

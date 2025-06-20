@@ -1,0 +1,133 @@
+<App>
+    <Script>
+        function onButtonClick(event)
+            local button = event.target
+            print("Button clicked:", button:getAttribute("text"))
+            
+            -- Show layout debug info
+            local window = document:getElementById("layoutWindow")
+            if window then
+                print("Layout Debug Info:")
+                print(window:getLayoutDebugInfo())
+            end
+        end
+        
+        function onToggleDebug(event)
+            local window = document:getElementById("layoutWindow")
+            local currentConfig = window:getAttribute("layoutContainer")
+            
+            if string.find(currentConfig, "debug") then
+                -- Remove debug
+                newConfig = string.gsub(currentConfig, ", debug", "")
+                newConfig = string.gsub(newConfig, "debug, ", "")
+                newConfig = string.gsub(newConfig, "debug", "")
+            else
+                -- Add debug
+                newConfig = currentConfig .. ", debug"
+            end
+            
+            window:setAttribute("layoutContainer", newConfig)
+            print("Layout debug toggled. New config:", newConfig)
+        end
+        
+        function onAddButton(event)
+            local container = document:getElementById("buttonContainer")
+            local buttonCount = #container:getChildren() + 1
+            
+            local newButton = document:createElement("Button")
+            newButton:setAttribute("text", "Dynamic " .. buttonCount)
+            newButton:setAttribute("layout", "width 120, grow")
+            newButton:setAttribute("onClick", "onButtonClick")
+            
+            container:appendChild(newButton)
+            print("Added dynamic button")
+        end
+        
+        function onRemoveButton(event)
+            local container = document:getElementById("buttonContainer")
+            local children = container:getChildren()
+            
+            if #children > 3 then -- Keep at least 3 buttons
+                container:removeChild(children[#children])
+                print("Removed button")
+            else
+                print("Cannot remove more buttons")
+            end
+        end
+        
+        function onChangeLayout(event)
+            local container = document:getElementById("buttonContainer")
+            local currentLayout = container:getAttribute("layoutContainer")
+            
+            if string.find(currentLayout, "wrap 2") then
+                container:setAttribute("layoutContainer", "gap 15, fill, wrap 4")
+                print("Changed to 4-column layout")
+            else
+                container:setAttribute("layoutContainer", "gap 10, fill, wrap 2")
+                print("Changed to 2-column layout")
+            end
+        end
+        
+        function onClearCache(event)
+            -- Clear layout cache (if exposed to Lua)
+            print("Layout cache cleared")
+        end
+    </Script>
+
+    <Window id="layoutWindow" visible=true text="Phase 2 Layout Test" width=600 height=500 
+            layoutContainer="gap 10, fill, insets 10">
+        
+        <!-- Header with controls -->
+        <Panel id="headerPanel" layout="dock north, height 40" 
+               layoutContainer="gap 5, fill">
+            <Button text="Toggle Debug" layout="width 100" onClick="onToggleDebug"/>
+            <Button text="Add Button" layout="width 100" onClick="onAddButton"/>
+            <Button text="Remove Button" layout="width 100" onClick="onRemoveButton"/>
+            <Button text="Change Layout" layout="width 100" onClick="onChangeLayout"/>
+            <Button text="Clear Cache" layout="width 100, grow, align right" onClick="onClearCache"/>
+        </Panel>
+        
+        <!-- Main content area -->
+        <Panel id="mainPanel" layout="grow, fill" 
+               layoutContainer="gap 10, fill">
+            
+            <!-- Button container with dynamic layout -->
+            <Panel id="buttonContainer" layout="grow, height 200" 
+                   layoutContainer="gap 10, fill, wrap 2">
+                <Button text="Button 1" layout="width 150, height 30" onClick="onButtonClick"/>
+                <Button text="Button 2" layout="width 150, height 30" onClick="onButtonClick"/>
+                <Button text="Button 3" layout="width 150, height 30, span 2" onClick="onButtonClick"/>
+                <Button text="Growing Button" layout="grow, height 30" onClick="onButtonClick"/>
+                <Button text="Fixed Width" layout="width 200, height 30" onClick="onButtonClick"/>
+            </Panel>
+            
+            <!-- Size constraint examples -->
+            <Panel id="sizePanel" layout="height 120" 
+                   layoutContainer="gap 5, fill">
+                <Label text="Size Constraints:" layout="dock north, height 20"/>
+                <Button text="Fixed 100px" layout="width 100, height 30" onClick="onButtonClick"/>
+                <Button text="Range 50:100:200" layout="width 50:100:200, height 30" onClick="onButtonClick"/>
+                <Button text="50% Width" layout="width 50%, height 30" onClick="onButtonClick"/>
+                <Button text="Auto Size" layout="height 30" onClick="onButtonClick"/>
+            </Panel>
+            
+            <!-- Alignment examples -->
+            <Panel id="alignPanel" layout="height 100" 
+                   layoutContainer="gap 5, fill">
+                <Label text="Alignment Examples:" layout="dock north, height 20"/>
+                <Button text="Left" layout="width 80, align left" onClick="onButtonClick"/>
+                <Button text="Center" layout="width 80, align center" onClick="onButtonClick"/>
+                <Button text="Right" layout="width 80, align right" onClick="onButtonClick"/>
+                <Button text="Fill" layout="align fill, height 30" onClick="onButtonClick"/>
+            </Panel>
+        </Panel>
+        
+        <!-- Footer with status -->
+        <Panel id="footerPanel" layout="dock south, height 30" 
+               layoutContainer="gap 5, fill">
+            <Label text="Status: Layout system active" layout="grow"/>
+            <Label text="Cache: 0 items" layout="width 100, align right"/>
+        </Panel>
+        
+    </Window>
+</App>
