@@ -1,5 +1,7 @@
 # LuaXmlWidgets
 
+**Work in progress project, not working yet as expected**
+
 A lightweight, cross-platform GUI framework that combines XML-based UI markup with Lua scripting to create native desktop applications using wxWidgets.
 
 ## Overview
@@ -12,7 +14,7 @@ The framework parses these files and generates native GUI components using the w
 - 🎯 **Declarative UI**: Define interfaces using intuitive XML markup
 - ⚡ **Lua Scripting**: Embedded Lua scripts for dynamic behavior and event handling
 - 🖥️ **Native Widgets**: Uses wxWidgets for truly native look and feel
-- 🔄 **Cross-Platform**: Runs on Windows, macOS, and Linux
+- 🔄 **Cross-Platform**: Potentially runs on Windows, macOS, and Linux(right now only macOS)
 - 📦 **Lightweight**: Minimal dependencies, small footprint
 - 🏗️ **Embeddable**: Can be integrated into existing C++ applications
 - 🎨 **Dynamic Updates**: Modify UI elements at runtime through Lua
@@ -35,8 +37,6 @@ cd LuaXmlWidgets
 
 # Build with Xcode (macOS)
 xcodebuild -project LuaXmlWidgets.xcodeproj -scheme LuaXmlWidgets
-
-# Or use your preferred build system
 ```
 
 ### Basic Usage
@@ -262,36 +262,3 @@ xcodebuild -list  # See available schemes
 ```bash
 xcodebuild -project LuaXmlWidgets.xcodeproj -scheme Test
 ```
-
-## Roadmap
-
-- [ ] **Layout Management**: Implement MigLayout-style constraint-based layouts
-- [ ] **More Widgets**: Add tabs, menus, toolbars, status bars
-- [ ] **Themes**: Support for custom styling and themes
-- [ ] **Data Binding**: Two-way data binding between Lua and UI
-- [ ] **Performance**: Optimize rendering and memory usage
-- [ ] **Documentation**: Complete API documentation
-- [ ] **Package Manager**: Integration with C++ package managers
-
-## Comparison with Alternatives
-
-| Framework | Approach | Pros | Cons |
-|-----------|----------|------|------|
-| **LuaXmlWidgets** | XML + Lua + Native | Lightweight, native widgets, embeddable | Smaller ecosystem |
-| **Electron** | HTML + JS + Chromium | Web tech, large ecosystem | Heavy, non-native |
-| **Qt QML** | QML + JS + Qt | Mature, powerful | Large dependency |
-| **Tauri** | HTML + Rust + WebView | Small size, secure | Still web-based |
-
-## License
-
-[Add your license here]
-
-## Acknowledgments
-
-- **wxWidgets** - Cross-platform GUI toolkit
-- **Lua** - Embedded scripting language
-- **MigLayout** - Inspiration for layout management design
-
----
-
-*LuaXmlWidgets - Native desktop apps made simple*
